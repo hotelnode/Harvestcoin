@@ -1387,6 +1387,9 @@ unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfS
     if(pindexLast->GetBlockTime() > STAKE_TIMESPAN_SWITCH_TIME)
 	nTargetTimespan = 2 * 60; // 2 minutes
 
+	if(pindexLast->GetBlockTime() > STAKE_TIMESPAN_SWITCH_TIME1)
+	nTargetTimespan = 10 * 60; // 10 minutes
+
     CBigNum bnTargetLimit = fProofOfStake ? GetProofOfStakeLimit(pindexLast->nHeight) : Params().ProofOfWorkLimit();
 
     if (pindexLast == NULL)
