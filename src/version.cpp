@@ -8,7 +8,7 @@
 // Name of client reported in the 'version' message. Report the same name
 // for both bitcoind and bitcoin-qt, to make it harder for attackers to
 // target servers or GUI users specifically.
-const std::string CLIENT_NAME("Adrenalize");
+const std::string CLIENT_NAME("Harvest");
 
 // Client version number
 #define CLIENT_VERSION_SUFFIX   ""
@@ -31,7 +31,7 @@ const std::string CLIENT_NAME("Adrenalize");
 // git will put "#define GIT_ARCHIVE 1" on the next line inside archives. 
 #define GIT_ARCHIVE 1
 #ifdef GIT_ARCHIVE
-#    define GIT_COMMIT_ID "60027"
+#    define GIT_COMMIT_ID "60028"
 #endif
 
 #define BUILD_DESC_FROM_COMMIT(maj,min,rev,build,commit) \

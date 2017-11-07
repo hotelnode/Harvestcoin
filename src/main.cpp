@@ -1384,7 +1384,11 @@ const CBlockIndex* GetLastBlockIndex(const CBlockIndex* pindex, bool fProofOfSta
 
 unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfStake)
 {
-    if(pindexLast->GetBlockTime() > STAKE_TIMESPAN_SWITCH_TIME)
+	unsigned int nTargetTemp = TARGET_SPACING;
+	if (pindexLast->nTime > FORK_TIME)
+		nTargetTemp = TARGET_SPACING2;
+
+	if(pindexLast->GetBlockTime() > STAKE_TIMESPAN_SWITCH_TIME)
 	nTargetTimespan = 2 * 60; // 2 minutes
 
 	if(pindexLast->GetBlockTime() > STAKE_TIMESPAN_SWITCH_TIME1)
@@ -1406,16 +1410,16 @@ unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfS
     int64_t nActualSpacing = pindexPrev->GetBlockTime() - pindexPrevPrev->GetBlockTime();
 
     if (nActualSpacing < 0){
-        nActualSpacing = TARGET_SPACING;
+        nActualSpacing = nTargetTemp;
     }
 
     // ppcoin: target change every block
     // ppcoin: retarget with exponential moving toward target spacing
     CBigNum bnNew;
     bnNew.SetCompact(pindexPrev->nBits);
-    int64_t nInterval = nTargetTimespan / TARGET_SPACING;
-    bnNew *= ((nInterval - 1) * TARGET_SPACING + nActualSpacing + nActualSpacing);
-    bnNew /= ((nInterval + 1) * TARGET_SPACING);
+    int64_t nInterval = nTargetTimespan / nTargetTemp;
+    bnNew *= ((nInterval - 1) * nTargetTemp + nActualSpacing + nActualSpacing);
+    bnNew /= ((nInterval + 1) * nTargetTemp);
 
     if (bnNew <= 0 || bnNew > bnTargetLimit)
         bnNew = bnTargetLimit;
