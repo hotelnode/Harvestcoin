@@ -1,5 +1,5 @@
 TEMPLATE = app
-TARGET = Harvest-qt
+TARGET = Hotelnode-qt
 VERSION = 2.1.0.3
 INCLUDEPATH += src src/json src/qt src/qt/plugins/mrichtexteditor
 QT += network printsupport
